@@ -3,6 +3,7 @@ import { Input, Output } from './view/View.js';
 import {
   purchaseMoney,
   winningNumbers as validateWinningNumbers,
+  bonusNumber as validateBonusNumber,
 } from './validation/validateFunctions.js';
 import LottoList from './model/LottoList.js';
 
@@ -20,11 +21,13 @@ class App {
       '당첨 번호를 입력해 주세요.\n',
       validateWinningNumbers,
     );
+    console.log(winningNumbers.split(',').map(Number));
 
     Output.printResult('');
     const bonusNumber = await Input.readUserInput(
       '보너스 번호를 입력해 주세요.\n',
-      () => true,
+      validateBonusNumber,
+      winningNumbers.split(',').map(Number),
     );
     console.log('bonusNumber', bonusNumber);
   }
