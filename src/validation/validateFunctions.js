@@ -21,10 +21,23 @@ const isExceedThousand = (input) => {
   );
 };
 
-export const checkPurchaseMoney = (input) => {
+const isNumberType = (input) => {
+  const money = Number(input);
+  toThrowNewError(
+    Number.isInteger(money) === false,
+    '숫자만 입력해주세요. ex) 8000',
+  );
+};
+
+export const purchaseMoney = (input) => {
+  isNumberType(input);
+  isExceedThousand(input);
+  canDivide(input);
+};
+
+export const check = (input, validate) => {
   try {
-    isExceedThousand(input);
-    canDivide(input);
+    validate(input);
     return true;
   } catch (error) {
     Console.print(error.message);
