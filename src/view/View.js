@@ -12,7 +12,7 @@ export const Input = {
 };
 
 export const Output = {
-  printResult() {
-    Console.print(``);
+  printResult(result) {
+    Console.print(`${result}`);
   },
 };
