@@ -20,6 +20,13 @@ class App {
       '당첨 번호를 입력해 주세요.\n',
       validateWinningNumbers,
     );
+
+    Output.printResult('');
+    const bonusNumber = await Input.readUserInput(
+      '보너스 번호를 입력해 주세요.\n',
+      () => true,
+    );
+    console.log('bonusNumber', bonusNumber);
   }
 }
 
