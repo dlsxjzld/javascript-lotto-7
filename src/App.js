@@ -8,28 +8,47 @@ import {
 import LottoList from './model/LottoList.js';
 
 class App {
+  #lottoList;
+
+  #winningNumbers;
+
+  #bonusNumber;
+
   async run() {
+    const input = await this.getPurchaseMoney();
+    const lottoList = new LottoList(input);
+    lottoList.printLottoCount();
+
+    await this.getWinningNumbers();
+    await this.getBonusNumber();
+    lottoList.updateLottoWinningCount(this.#winningNumbers, this.#bonusNumber);
+    lottoList.printWinningResult();
+  }
+
+  async getPurchaseMoney() {
     const input = await Input.readUserInput(
       '구입금액을 입력해 주세요.\n',
       purchaseMoney,
     );
+    return input;
+  }
 
-    const lottoList = new LottoList(input);
-    lottoList.printLottoCount();
-
+  async getWinningNumbers() {
     const winningNumbers = await Input.readUserInput(
       '당첨 번호를 입력해 주세요.\n',
       validateWinningNumbers,
     );
-    console.log(winningNumbers.split(',').map(Number));
+    this.#winningNumbers = winningNumbers.split(',').map(Number);
+  }
 
+  async getBonusNumber() {
     Output.printResult('');
     const bonusNumber = await Input.readUserInput(
       '보너스 번호를 입력해 주세요.\n',
       validateBonusNumber,
-      winningNumbers.split(',').map(Number),
+      this.#winningNumbers,
     );
-    console.log('bonusNumber', bonusNumber);
+    this.#bonusNumber = Number(bonusNumber);
   }
 }
 
