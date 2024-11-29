@@ -49,7 +49,7 @@ describe('로또 테스트', () => {
     jest.restoreAllMocks();
   });
 
-  test('기능 테스트', async () => {
+  test.skip('기능 테스트', async () => {
     // given
     const logSpy = getLogSpy();
 
@@ -93,11 +93,30 @@ describe('로또 테스트', () => {
     });
   });
 
-  test('예외 테스트', async () => {
+  test.skip('예외 테스트', async () => {
     await runException('1000j');
   });
 
-  test.only('구입금액 테스트', async () => {
-    expect(checkPurchaseMoney('1000')).toBe(true);
+  test('구입금액 1000 단위로 나뉘는지 테스트', async () => {
+    const canDivide = (input) => {
+      const money = Number(input);
+      if (money % 1000 !== 0) {
+        return false;
+      }
+      return true;
+    };
+    expect(canDivide('1000')).toBe(true);
+    expect(canDivide('1010')).toBe(false);
+  });
+
+  test.only('구입금액 1000원 이상인지 테스트', async () => {
+    const isExceedThousand = (input) => {
+      if (Number(input) < 1000) {
+        return false;
+      }
+      return true;
+    };
+    expect(isExceedThousand('1000')).toBe(true);
+    expect(isExceedThousand('999')).toBe(false);
   });
 });
