@@ -6,6 +6,10 @@ export const toThrowNewError = (condition, errorMessage) => {
   }
 };
 
+const hasEmptySpace = (input) => {
+  toThrowNewError(input.includes(' '), '공백은 제외해야 합니다. ex) 1000');
+};
+
 const canDivide = (input) => {
   const money = Number(input);
   toThrowNewError(
@@ -29,7 +33,14 @@ const isNumberType = (input) => {
   );
 };
 
+// TODO:
+// 당첨번호에 공백이 있는지
+// 당첩번호가 ,로 나뉘는지
+// 당첨 번호가 6개인지
+// 각각의 당첨 번호가 1~45에 해당하는지
+
 export const purchaseMoney = (input) => {
+  hasEmptySpace(input);
   isNumberType(input);
   isExceedThousand(input);
   canDivide(input);
