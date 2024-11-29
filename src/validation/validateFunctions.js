@@ -26,8 +26,8 @@ const isExceedThousand = (input) => {
 };
 
 const isNumberType = (input) => {
-  const money = Number(input);
-  toThrowNewError(Number.isInteger(money) === false, '숫자만 입력해주세요. ');
+  const number = Number(input);
+  toThrowNewError(Number.isInteger(number) === false, '숫자만 입력해주세요.');
 };
 
 const DELIMITER = ',';
@@ -66,6 +66,13 @@ const hasDuplicateNumber = (input) => {
   );
 };
 
+const isWinningNumbersHasBonusNumber = (input, numbers) => {
+  toThrowNewError(
+    numbers.includes(Number(input)),
+    '당첨 번호와 중복되는 숫자는 안됩니다.',
+  );
+};
+
 export const purchaseMoney = (input) => {
   hasEmptySpace(input);
   isNumberType(input);
@@ -81,9 +88,16 @@ export const winningNumbers = (input) => {
   isCorrectRange(input);
 };
 
-export const check = (input, validate) => {
+export const bonusNumber = (input, numbers) => {
+  hasEmptySpace(input);
+  isNumberType(input);
+  isCorrectRange(input);
+  isWinningNumbersHasBonusNumber(input, numbers);
+};
+
+export const check = (input, validate, rest) => {
   try {
-    validate(input);
+    validate(input, rest);
     return true;
   } catch (error) {
     Console.print(error.message);
