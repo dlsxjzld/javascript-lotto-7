@@ -7,7 +7,7 @@ export const toThrowNewError = (condition, errorMessage) => {
 };
 
 const hasEmptySpace = (input) => {
-  toThrowNewError(input.includes(' '), '공백은 제외해야 합니다. ex) 1000');
+  toThrowNewError(input.includes(' '), '공백은 제외해야 합니다.');
 };
 
 const canDivide = (input) => {
@@ -27,23 +27,58 @@ const isExceedThousand = (input) => {
 
 const isNumberType = (input) => {
   const money = Number(input);
+  toThrowNewError(Number.isInteger(money) === false, '숫자만 입력해주세요. ');
+};
+
+const DELIMITER = ',';
+const RIGHT_WINNING_NUMBER_COUNT = 6;
+const canSplit = (input) => {
+  const winningNumbers = input.split(DELIMITER);
   toThrowNewError(
-    Number.isInteger(money) === false,
-    '숫자만 입력해주세요. ex) 8000',
+    winningNumbers.length !== RIGHT_WINNING_NUMBER_COUNT,
+    '당첨 번호 6개를 입력해주세요. ex) 1,2,3,4,5,6',
   );
 };
 
-// TODO:
-// 당첨번호에 공백이 있는지
-// 당첩번호가 ,로 나뉘는지
-// 당첨 번호가 6개인지
-// 각각의 당첨 번호가 1~45에 해당하는지
+const MIN_RANGE = 1;
+const MAX_RANGE = 45;
+const isCorrectRange = (input) => {
+  const numbers = input.split(DELIMITER).map(Number);
+  toThrowNewError(
+    numbers.some((number) => number < MIN_RANGE || number > MAX_RANGE),
+    '1~45 범위만 입력해주세요.',
+  );
+};
+
+const isAllPositiveNumberType = (input) => {
+  const numbers = input.split(DELIMITER).map(Number);
+  toThrowNewError(
+    numbers.some((number) => Number.isInteger(number) === false),
+    '숫자만 입력해주세요. ex) 1,2,3,4,5,6',
+  );
+};
+
+const hasDuplicateNumber = (input) => {
+  const numbers = input.split(DELIMITER).map(Number);
+  toThrowNewError(
+    new Set(numbers).size !== RIGHT_WINNING_NUMBER_COUNT,
+    '중복되는 숫자는 안됩니다.',
+  );
+};
 
 export const purchaseMoney = (input) => {
   hasEmptySpace(input);
   isNumberType(input);
   isExceedThousand(input);
   canDivide(input);
+};
+
+export const winningNumbers = (input) => {
+  hasEmptySpace(input);
+  canSplit(input);
+  isAllPositiveNumberType(input);
+  hasDuplicateNumber(input);
+  isCorrectRange(input);
 };
 
 export const check = (input, validate) => {
