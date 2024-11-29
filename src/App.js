@@ -1,6 +1,7 @@
-import { Console } from '@woowacourse/mission-utils';
-import { Input } from './view/View.js';
+import { Console, Random } from '@woowacourse/mission-utils';
+import { Input, Output } from './view/View.js';
 import { purchaseMoney } from './validation/validateFunctions.js';
+import LottoList from './model/LottoList.js';
 
 class App {
   async run() {
@@ -8,7 +9,9 @@ class App {
       '구입금액을 입력해 주세요.\n',
       purchaseMoney,
     );
-    Console.print(input);
+
+    const lottoList = new LottoList(input);
+    lottoList.printLottoCount();
   }
 }
 
