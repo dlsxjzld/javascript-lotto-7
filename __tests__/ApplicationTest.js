@@ -109,7 +109,7 @@ describe('로또 테스트', () => {
     expect(canDivide('1010')).toBe(false);
   });
 
-  test.only('구입금액 1000원 이상인지 테스트', async () => {
+  test('구입금액 1000원 이상인지 테스트', async () => {
     const isExceedThousand = (input) => {
       if (Number(input) < 1000) {
         return false;
@@ -118,5 +118,20 @@ describe('로또 테스트', () => {
     };
     expect(isExceedThousand('1000')).toBe(true);
     expect(isExceedThousand('999')).toBe(false);
+  });
+
+  test.only('구입금액 숫자만 입력했는지 테스트', async () => {
+    const isNumberType = (input) => {
+      if (!Number.isInteger(Number(input))) {
+        return false;
+      }
+      return true;
+    };
+
+    expect(isNumberType('1000')).toBe(true);
+    expect(isNumberType('999j')).toBe(false);
+    expect(isNumberType('1000.0')).toBe(true);
+    expect(isNumberType(NaN)).toBe(false);
+    expect(isNumberType(Infinity)).toBe(false);
   });
 });
