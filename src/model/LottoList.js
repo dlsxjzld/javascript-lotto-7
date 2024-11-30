@@ -4,13 +4,13 @@ import { Output } from '../view/View.js';
 
 const LOTTO_PRICE = 1_000;
 
-const MONEY_FOR_LOTTO_WINNING_MATCH = {
+const MONEY_FOR_LOTTO_WINNING_MATCH = Object.freeze({
   3: 5_000,
   4: 50_000,
   5: 1_500_000,
   bonus: 30_000_000,
   6: 2_000_000_000,
-};
+});
 
 const LOTTO_MATCH_KEY = [3, 4, 5, 'bonus', 6];
 

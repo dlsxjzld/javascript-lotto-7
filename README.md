@@ -1,6 +1,28 @@
 # javascript-lotto-precourse
 
-# javascript-lotto-precourse
+# 프로젝트 구조
+
+```
+lotto
+├─ .npmrc
+├─ README.md
+├─ __tests__
+│  ├─ ApplicationTest.js - 단위 테스트
+│  └─ LottoTest.js - 로또 테스트
+├─ package-lock.json
+├─ package.json
+└─ src
+   ├─ App.js - 컨트롤러
+   ├─ Lotto.js - 로또 모델 (프로그래밍 요구사항에 의해 Model 디렉토리로 이동시키지 않았음)
+   ├─ index.js - 진입점
+   ├─ model
+   │  └─ LottoList.js - 로또들을 갖고 있는 로또 리스트 모델
+   ├─ validation
+   │  └─ validateFunctions.js - 검증 로직
+   └─ view
+      └─ View.js - 입출력 모듈
+
+```
 
 ### 시간 분배 목표 (4시간)
 
@@ -44,13 +66,18 @@
   - "[ERROR]"로 시작하는 메시지와 함께 `Error`를 발생
   - 해당 메시지를 출력한 다음 해당 지점부터 다시 입력을 받는다.
 
+## 문제 해결 과정
+
 1. 입력
 2. 검증
 3. 로또 동작
+   - 추가적인 예외 확인 시 2번 다시 수행
 4. 출력
 
-# 고민되는 점
+## 고민되는 점
 
-Model에서 View를 갖고 있어도 될까? 로또리스트 모델에서 로또 개수 출력해도 될까?
-
-- 현재는 App(컨트롤러)에서 하는 중
+1. Model에서 View를 갖고 있어도 될까?
+   - ex) 로또리스트 모델에서 로또 개수 출력해도 될까?
+   - ex) 로또리스트 모델에서 로또 당첨과 수익률 출력해도 될까?
+   - 현재는 로또와 매우 연관이 깊어서 로또 리스트 모델에서 하는 중인데 이렇게 하는 게 맞는 방법인지 고민입니다.
+     로또 리스트에서 데이터를 컨트롤러의 View에 전달해서 View의 Output에서 출력하는 게 더 좋은 방법인지 궁금합니다.

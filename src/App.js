@@ -1,4 +1,3 @@
-import { Console, Random } from '@woowacourse/mission-utils';
 import { Input, Output } from './view/View.js';
 import {
   purchaseMoney,
@@ -8,8 +7,6 @@ import {
 import LottoList from './model/LottoList.js';
 
 class App {
-  #lottoList;
-
   #winningNumbers;
 
   #bonusNumber;
