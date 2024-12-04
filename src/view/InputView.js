@@ -10,9 +10,3 @@ export const Input = {
     return this.readUserInput(message, validation, rest);
   },
 };
-
-export const Output = {
-  printResult(result) {
-    Console.print(`${result}`);
-  },
-};
