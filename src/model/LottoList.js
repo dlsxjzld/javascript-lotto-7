@@ -1,6 +1,6 @@
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from '../Lotto.js';
-import { Output } from '../view/OutputView.js';
+import { OutputView } from '../view/OutputView.js';
 import {
   LOTTO_MATCH_KEY,
   LOTTO_PRICE,
@@ -29,8 +29,8 @@ export default class LottoList {
   }
 
   printLottoCount() {
-    Output.printResult('');
-    Output.printResult(
+    OutputView.printResult('');
+    OutputView.printResult(
       `${this.#lottoCount.toLocaleString()}개를 구매했습니다.`,
     );
     this.printLottoList();
@@ -38,18 +38,18 @@ export default class LottoList {
 
   printLottoList() {
     this.#lottoList.forEach((lotto) => {
-      Output.printResult(`[${lotto.getNumbers().join(', ')}]`);
+      OutputView.printResult(`[${lotto.getNumbers().join(', ')}]`);
     });
-    Output.printResult('');
+    OutputView.printResult('');
   }
 
   printWinningResult() {
-    Output.printResult('');
-    Output.printResult('당첨 통계');
-    Output.printResult('---');
+    OutputView.printResult('');
+    OutputView.printResult('당첨 통계');
+    OutputView.printResult('---');
     this.printLottoWinningCount();
     const calculatedProfit = this.calculateProfit();
-    Output.printResult(
+    OutputView.printResult(
       `총 수익률은 ${calculatedProfit.toLocaleString()}%입니다.`,
     );
   }
@@ -75,13 +75,13 @@ export default class LottoList {
   }
 
   printBonus(key) {
-    Output.printResult(
+    OutputView.printResult(
       `5개 일치, 보너스 볼 일치 (${MONEY_FOR_LOTTO_WINNING_MATCH[key].toLocaleString()}원) - ${this.#lottoWinningCount[key].toLocaleString()}개`,
     );
   }
 
   printNormal(key) {
-    Output.printResult(
+    OutputView.printResult(
       `${key}개 일치 (${MONEY_FOR_LOTTO_WINNING_MATCH[key].toLocaleString()}원) - ${this.#lottoWinningCount[key].toLocaleString()}개`,
     );
   }

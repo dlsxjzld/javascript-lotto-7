@@ -1,5 +1,5 @@
-import { Input } from './view/InputView.js';
-import { Output } from './view/OutputView.js';
+import { InputView } from './view/InputView.js';
+import { OutputView } from './view/OutputView.js';
 import {
   purchaseMoney,
   winningNumbers as validateWinningNumbers,
@@ -24,7 +24,7 @@ class App {
   }
 
   async getPurchaseMoney() {
-    const input = await Input.readUserInput(
+    const input = await InputView.readUserInput(
       '구입금액을 입력해 주세요.\n',
       purchaseMoney,
     );
@@ -32,7 +32,7 @@ class App {
   }
 
   async getWinningNumbers() {
-    const winningNumbers = await Input.readUserInput(
+    const winningNumbers = await InputView.readUserInput(
       '당첨 번호를 입력해 주세요.\n',
       validateWinningNumbers,
     );
@@ -40,8 +40,8 @@ class App {
   }
 
   async getBonusNumber() {
-    Output.printResult('');
-    const bonusNumber = await Input.readUserInput(
+    OutputView.printResult('');
+    const bonusNumber = await InputView.readUserInput(
       '보너스 번호를 입력해 주세요.\n',
       validateBonusNumber,
       this.#winningNumbers,
