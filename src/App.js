@@ -8,18 +8,14 @@ import {
 import LottoList from './model/LottoList.js';
 
 class App {
-  #winningNumbers;
-
-  #bonusNumber;
-
   async run() {
     const input = await this.getPurchaseMoney();
     const lottoList = new LottoList(input);
     lottoList.printLottoCount();
 
-    await this.getWinningNumbers();
-    await this.getBonusNumber();
-    lottoList.updateLottoWinningCount(this.#winningNumbers, this.#bonusNumber);
+    const winningNumbers = await this.getWinningNumbers();
+    const bonusNumber = await this.getBonusNumber(winningNumbers);
+    lottoList.updateLottoWinningCount(winningNumbers, bonusNumber);
     lottoList.printWinningResult();
   }
 
@@ -36,17 +32,17 @@ class App {
       '당첨 번호를 입력해 주세요.\n',
       validateWinningNumbers,
     );
-    this.#winningNumbers = winningNumbers.split(',').map(Number);
+    return winningNumbers.split(',').map(Number);
   }
 
-  async getBonusNumber() {
+  async getBonusNumber(winningNumbers) {
     OutputView.printResult('');
     const bonusNumber = await InputView.readUserInput(
       '보너스 번호를 입력해 주세요.\n',
       validateBonusNumber,
-      this.#winningNumbers,
+      winningNumbers,
     );
-    this.#bonusNumber = Number(bonusNumber);
+    return Number(bonusNumber);
   }
 }
 
