@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 
-export const Output = {
+export const OutputView = {
   printResult(result) {
     Console.print(`${result}`);
   },
