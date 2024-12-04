@@ -28,19 +28,12 @@ export default class LottoList {
     );
   }
 
-  printLottoCount() {
-    OutputView.printResult('');
-    OutputView.printResult(
-      `${this.#lottoCount.toLocaleString()}개를 구매했습니다.`,
-    );
-    this.printLottoList();
+  getLottoCount() {
+    return this.#lottoCount;
   }
 
-  printLottoList() {
-    this.#lottoList.forEach((lotto) => {
-      OutputView.printResult(`[${lotto.getNumbers().join(', ')}]`);
-    });
-    OutputView.printResult('');
+  getLottoList() {
+    return this.#lottoList.map((lotto) => lotto.getNumbers());
   }
 
   printWinningResult() {
