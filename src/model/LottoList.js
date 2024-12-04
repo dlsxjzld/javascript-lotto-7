@@ -1,6 +1,6 @@
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from '../Lotto.js';
-import { OutputView } from '../view/OutputView.js';
+
 import {
   LOTTO_MATCH_KEY,
   LOTTO_PRICE,
@@ -36,15 +36,8 @@ export default class LottoList {
     return this.#lottoList.map((lotto) => lotto.getNumbers());
   }
 
-  printWinningResult() {
-    OutputView.printResult('');
-    OutputView.printResult('당첨 통계');
-    OutputView.printResult('---');
-    this.printLottoWinningCount();
-    const calculatedProfit = this.calculateProfit();
-    OutputView.printResult(
-      `총 수익률은 ${calculatedProfit.toLocaleString()}%입니다.`,
-    );
+  getLottoWinningCount() {
+    return this.#lottoWinningCount;
   }
 
   updateLottoWinningCount(winningNumbers, bonusNumber) {
@@ -55,28 +48,6 @@ export default class LottoList {
       }
       this.#lottoWinningCount[matchCount] += 1;
     });
-  }
-
-  printLottoWinningCount() {
-    LOTTO_MATCH_KEY.forEach((key) => {
-      if (key === 'bonus') {
-        this.printBonus(key);
-        return;
-      }
-      this.printNormal(key);
-    });
-  }
-
-  printBonus(key) {
-    OutputView.printResult(
-      `5개 일치, 보너스 볼 일치 (${MONEY_FOR_LOTTO_WINNING_MATCH[key].toLocaleString()}원) - ${this.#lottoWinningCount[key].toLocaleString()}개`,
-    );
-  }
-
-  printNormal(key) {
-    OutputView.printResult(
-      `${key}개 일치 (${MONEY_FOR_LOTTO_WINNING_MATCH[key].toLocaleString()}원) - ${this.#lottoWinningCount[key].toLocaleString()}개`,
-    );
   }
 
   calculateProfit() {
