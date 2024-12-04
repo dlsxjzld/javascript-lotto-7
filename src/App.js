@@ -6,6 +6,10 @@ import {
   bonusNumber as validateBonusNumber,
 } from './validation/validateFunctions.js';
 import LottoList from './model/LottoList.js';
+import {
+  LOTTO_MATCH_KEY,
+  MONEY_FOR_LOTTO_WINNING_MATCH,
+} from './constants/constant.js';
 
 class App {
   async run() {
@@ -16,7 +20,7 @@ class App {
     const winningNumbers = await this.getWinningNumbers();
     const bonusNumber = await this.getBonusNumber(winningNumbers);
     lottoList.updateLottoWinningCount(winningNumbers, bonusNumber);
-    lottoList.printWinningResult();
+    this.printWinningResult(lottoList);
   }
 
   async getPurchaseMoney() {
@@ -64,6 +68,48 @@ class App {
         OutputView.printResult(`[${lottoNumbers.join(', ')}]`),
       );
     OutputView.printResult('');
+  }
+
+  printWinningResult(lottoList) {
+    this.printWinningInstruction();
+    this.printLottoWinningCount(lottoList);
+    this.printCalculateProfit(lottoList);
+  }
+
+  printWinningInstruction() {
+    OutputView.printResult('');
+    OutputView.printResult('당첨 통계');
+    OutputView.printResult('---');
+  }
+
+  printLottoWinningCount(lottoList) {
+    const lottoWinningCount = lottoList.getLottoWinningCount();
+    LOTTO_MATCH_KEY.forEach((key) => {
+      if (key === 'bonus') {
+        this.printBonus(key, lottoWinningCount);
+        return;
+      }
+      this.printNormal(key, lottoWinningCount);
+    });
+  }
+
+  printBonus(key, lottoWinningCount) {
+    OutputView.printResult(
+      `5개 일치, 보너스 볼 일치 (${MONEY_FOR_LOTTO_WINNING_MATCH[key].toLocaleString()}원) - ${lottoWinningCount[key].toLocaleString()}개`,
+    );
+  }
+
+  printNormal(key, lottoWinningCount) {
+    OutputView.printResult(
+      `${key}개 일치 (${MONEY_FOR_LOTTO_WINNING_MATCH[key].toLocaleString()}원) - ${lottoWinningCount[key].toLocaleString()}개`,
+    );
+  }
+
+  printCalculateProfit(lottoList) {
+    const calculatedProfit = lottoList.calculateProfit();
+    OutputView.printResult(
+      `총 수익률은 ${calculatedProfit.toLocaleString()}%입니다.`,
+    );
   }
 }
 
