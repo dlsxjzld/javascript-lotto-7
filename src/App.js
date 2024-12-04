@@ -10,6 +10,7 @@ import {
   LOTTO_MATCH_KEY,
   MONEY_FOR_LOTTO_WINNING_MATCH,
 } from './constants/constant.js';
+import Statistics from './model/Statistics.js';
 
 class App {
   async run() {
@@ -19,8 +20,8 @@ class App {
 
     const winningNumbers = await this.getWinningNumbers();
     const bonusNumber = await this.getBonusNumber(winningNumbers);
-    lottoList.updateLottoWinningCount(winningNumbers, bonusNumber);
-    this.printWinningResult(lottoList);
+    const statistics = new Statistics(lottoList, winningNumbers, bonusNumber);
+    this.printWinningResult(statistics);
   }
 
   async getPurchaseMoney() {
@@ -62,18 +63,17 @@ class App {
   }
 
   printLottoList(lottoList) {
-    lottoList
-      .getLottoList()
-      .forEach((lottoNumbers) =>
-        OutputView.printResult(`[${lottoNumbers.join(', ')}]`),
-      );
+    lottoList.getLottoList().forEach((lotto) => {
+      const lottoNumbers = lotto.getNumbers();
+      OutputView.printResult(`[${lottoNumbers.join(', ')}]`);
+    });
     OutputView.printResult('');
   }
 
-  printWinningResult(lottoList) {
+  printWinningResult(statistics) {
     this.printWinningInstruction();
-    this.printLottoWinningCount(lottoList);
-    this.printCalculateProfit(lottoList);
+    this.printLottoWinningCount(statistics);
+    this.printCalculateProfit(statistics);
   }
 
   printWinningInstruction() {
@@ -82,8 +82,8 @@ class App {
     OutputView.printResult('---');
   }
 
-  printLottoWinningCount(lottoList) {
-    const lottoWinningCount = lottoList.getLottoWinningCount();
+  printLottoWinningCount(statistics) {
+    const lottoWinningCount = statistics.getLottoWinningCount();
     LOTTO_MATCH_KEY.forEach((key) => {
       if (key === 'bonus') {
         this.printBonus(key, lottoWinningCount);
@@ -105,8 +105,8 @@ class App {
     );
   }
 
-  printCalculateProfit(lottoList) {
-    const calculatedProfit = lottoList.calculateProfit();
+  printCalculateProfit(statistics) {
+    const calculatedProfit = statistics.calculateProfit();
     OutputView.printResult(
       `총 수익률은 ${calculatedProfit.toLocaleString()}%입니다.`,
     );
