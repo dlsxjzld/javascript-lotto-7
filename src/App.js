@@ -11,7 +11,7 @@ class App {
   async run() {
     const input = await this.getPurchaseMoney();
     const lottoList = new LottoList(input);
-    lottoList.printLottoCount();
+    this.printLottoInstruction(lottoList);
 
     const winningNumbers = await this.getWinningNumbers();
     const bonusNumber = await this.getBonusNumber(winningNumbers);
@@ -43,6 +43,27 @@ class App {
       winningNumbers,
     );
     return Number(bonusNumber);
+  }
+
+  printLottoInstruction(lottoList) {
+    this.printLottoCount(lottoList);
+    this.printLottoList(lottoList);
+  }
+
+  printLottoCount(lottoList) {
+    OutputView.printResult('');
+    OutputView.printResult(
+      `${lottoList.getLottoCount().toLocaleString()}개를 구매했습니다.`,
+    );
+  }
+
+  printLottoList(lottoList) {
+    lottoList
+      .getLottoList()
+      .forEach((lottoNumbers) =>
+        OutputView.printResult(`[${lottoNumbers.join(', ')}]`),
+      );
+    OutputView.printResult('');
   }
 }
 
