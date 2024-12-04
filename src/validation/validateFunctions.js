@@ -1,4 +1,11 @@
 import { Console } from '@woowacourse/mission-utils';
+import {
+  DELIMITER,
+  LOTTO_PRICE,
+  MAX_RANGE,
+  MIN_RANGE,
+  RIGHT_WINNING_NUMBER_COUNT,
+} from '../constants/constant.js';
 
 export const toThrowNewError = (condition, errorMessage) => {
   if (condition) {
@@ -13,14 +20,14 @@ const hasEmptySpace = (input) => {
 const canDivide = (input) => {
   const money = Number(input);
   toThrowNewError(
-    money % 1000 !== 0,
+    money % LOTTO_PRICE !== 0,
     '1000원 단위로 입력해야 합니다. ex) 8000',
   );
 };
 const isExceedThousand = (input) => {
   const convertedInput = Number(input);
   toThrowNewError(
-    convertedInput >= 1000 === false,
+    convertedInput >= LOTTO_PRICE === false,
     '1000원 이상만 입력 가능합니다. ex) 1000',
   );
 };
@@ -30,8 +37,6 @@ const isNumberType = (input) => {
   toThrowNewError(Number.isInteger(number) === false, '숫자만 입력해주세요.');
 };
 
-const DELIMITER = ',';
-const RIGHT_WINNING_NUMBER_COUNT = 6;
 const canSplit = (input) => {
   const winningNumbers = input.split(DELIMITER);
   toThrowNewError(
@@ -40,8 +45,6 @@ const canSplit = (input) => {
   );
 };
 
-const MIN_RANGE = 1;
-const MAX_RANGE = 45;
 const isCorrectRange = (input) => {
   const numbers = input.split(DELIMITER).map(Number);
   toThrowNewError(
