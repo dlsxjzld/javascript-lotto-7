@@ -1,4 +1,5 @@
-import { Input, Output } from './view/View.js';
+import { Input } from './view/InputView.js';
+import { Output } from './view/OutputView.js';
 import {
   purchaseMoney,
   winningNumbers as validateWinningNumbers,

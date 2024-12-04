@@ -1,6 +1,6 @@
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from '../Lotto.js';
-import { Output } from '../view/View.js';
+import { Output } from '../view/OutputView.js';
 import {
   LOTTO_MATCH_KEY,
   LOTTO_PRICE,
